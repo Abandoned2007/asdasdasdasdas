@@ -1,0 +1,68 @@
+{
+  "version": "1.0",
+  "id": "9391e0ea",
+  "created": "2026-11-13T21:26:31.586266",
+  "modified": "2026-11-13T21:29:21.448813",
+  "initialPhoto": "01_InitialPhoto/2e002ee24accc040804ab3e884294fed_1_2_1.jpg",
+  "restoredPhoto": "",
+  "background": "",
+  "frame": "",
+  "font": "",
+  "costume": "",
+  "adjustments": {
+    "brightness": 1,
+    "contrast": 1,
+    "sharpness": 0
+  },
+  "costumeTransform": {
+    "position": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "scale": 1.0,
+    "rotation": 0.0
+  },
+  "textOverlay": {
+    "content": "sdad",
+    "position": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "style": {
+      "fontSize": 48,
+      "color": "#FFFFFF",
+      "stroke": {
+        "enabled": true,
+        "width": 2,
+        "color": "#aa0000"
+      },
+      "shadow": {
+        "enabled": false,
+        "offset": {
+          "x": 2,
+          "y": 2
+        },
+        "color": "#000000",
+        "blur": 4
+      }
+    },
+    "fontPath": "",
+    "visible": true
+  },
+  "mlSettings": {
+    "model": "CodeFormer",
+    "fidelity": 0.5
+  },
+  "canvasZoom": 1.0,
+  "canvasPan": {
+    "x": 0.0,
+    "y": 0.0
+  },
+  "layerVisibility": {
+    "background": true,
+    "photo": true,
+    "costume": true,
+    "frame": true,
+    "text": true
+  }
+}
