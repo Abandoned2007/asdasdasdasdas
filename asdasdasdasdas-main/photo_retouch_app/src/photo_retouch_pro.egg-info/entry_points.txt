@@ -1,0 +1,2 @@
+[console_scripts]
+photo-retouch = photo_retouch.__main__:main

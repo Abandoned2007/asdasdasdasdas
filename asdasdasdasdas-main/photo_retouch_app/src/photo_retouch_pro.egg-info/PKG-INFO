@@ -1,0 +1,70 @@
+Metadata-Version: 2.4
+Name: photo-retouch-pro
+Version: 1.0.0
+Summary: Professional photo retouching application with ML-powered restoration
+Author-email: Photo Retouch Team <team@photoretouch.local>
+License: MIT
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Multimedia :: Graphics :: Editors
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: Flask<4,>=3.1
+Requires-Dist: rembg[cpu]<3,>=2.0.67
+Requires-Dist: mediapipe<1,>=0.10.32
+Requires-Dist: gunicorn<28,>=23; sys_platform != "win32"
+Requires-Dist: Pillow>=11.0.0
+Requires-Dist: numpy>=1.24.0
+Requires-Dist: opencv-python-headless<5,>=4.10
+Requires-Dist: fonttools>=4.40.0
+Provides-Extra: ml
+Requires-Dist: torch>=2.0.0; extra == "ml"
+Requires-Dist: torchvision>=0.15.0; extra == "ml"
+Requires-Dist: gfpgan>=1.3.8; extra == "ml"
+Requires-Dist: realesrgan>=0.3.0; extra == "ml"
+Requires-Dist: basicsr>=1.4.2; extra == "ml"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.0; extra == "dev"
+Requires-Dist: pytest-qt>=4.2.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Requires-Dist: mypy>=1.5.0; extra == "dev"
+
+﻿# Photo Retouch Pro — Flask
+
+Веб-редактор фотографий. Запуск из корня репозитория:
+
+```sh
+docker compose up -d --build
+```
+
+Открыть http://localhost:5000. Проверка: `docker compose ps`, логи: `docker compose logs`, остановка: `docker compose down`.
+
+Фотографии, ресурсы и сохранённый веб-проект находятся в `photo_retouch_app/PhotoRetouchProject`, подключённой к `/data` контейнера. Данные сохраняются после пересоздания контейнера. Существующие фотографии доступны в библиотеке. Старые `.proj` можно открыть кнопкой «Открыть .proj»; ресурсы должны присутствовать в папках проекта. Сохранение на сервере использует один общий `web-project.proj`; отдельные проекты можно скачивать как JSON.
+
+Возможности: загрузка фотографий, фонов, прозрачных рамок и костюмов, шрифтов; шесть коррекций; текст с координатами и цветом; масштаб, поворот и прозрачность костюма; видимость и порядок слоёв; отмена и повтор; поворот, отражение и обрезка фото; экспорт PNG/JPEG/TIFF. Трансформации создают новые файлы, не меняя исходник. Увеличение ×2 использует Lanczos. Кнопка «Чёрно-белое» обесцвечивает фотографию с сохранением прозрачности. Кнопка «Удалить фон» использует локальную модель rembg/u2netp; веса включаются в Docker-образ при сборке. Обе операции поддерживают отмену. Обрезка задаётся координатами в пикселях исходной активной фотографии.
+
+Интерфейс предназначен для локальной работы: порт опубликован только на 127.0.0.1. Загрузка ограничена 40 МБ и 32 Мп. Для увеличения ×2 — максимум 8 Мп.
+
+Локальный запуск без Docker (Python 3.10+):
+
+```sh
+cd photo_retouch_app
+pip install -e .
+python -m photo_retouch
+```
+
+Проверка HTTP/API внутри работающего контейнера:
+
+```sh
+docker compose exec -T photo-retouch python -m unittest discover -s /app/tests -v
+```
+
+Тесты в `photo_retouch_app/tests/test_web.py`; Docker образ копирует их в `/app/tests`. Старый PyQt-интерфейс сохранён в `gui/` для справки, веб-версия от него не зависит.
+
